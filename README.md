@@ -48,3 +48,107 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+## EXPO + NATIVEWIND v5 (FINAL WORKING SETUP)
+
+1. 🧱Create Project
+
+npx create-expo-app myApp
+cd myApp
+
+2. 📦Install NativeWind v5 + deps
+
+npx expo install nativewind@preview react-native-css react-native-reanimated react-native-safe-area-context
+
+3. 🎨Install Tailwind + PostCSS
+
+npx expo install --dev tailwindcss @tailwindcss/postcss postcss
+
+4. 📄postcss.config.mjs
+
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+5. 🎨global.css
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+6. ⚙️metro.config.js
+
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativewind } = require("nativewind/metro");
+
+const config = getDefaultConfig(__dirname);
+
+module.exports = withNativewind(config);
+
+7. ⚙️babel.config.js (FINAL CORRECT)
+
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ["babel-preset-expo"],
+    plugins: [
+      "react-native-reanimated/plugin", // 👈 ONLY THIS
+    ],
+  };
+};
+
+8. 📦package.json fix
+
+"overrides": {
+  "lightningcss": "1.30.1"
+}
+
+9. 🧠TypeScript (optional but recommended)
+👉 file: nativewind-env.d.ts
+
+/// <reference types="react-native-css/types" />
+
+10. 📥 Import CSS (IMPORTANT)
+👉 file: app/_layout.tsx
+
+import "../global.css";
+
+
+11. 🧪Test Screen
+👉 app/(tabs)/index.tsx
+
+import { Text, View } from "react-native";
+
+export default function Index() {
+  return (
+    <View className="flex-1 items-center justify-center bg-red-500">
+      <Text className="text-white text-xl font-bold">
+        NativeWind v5 Working 🚀
+      </Text>
+    </View>
+  );
+}
+
+
+12. 🔄Run (ALWAYS CLEAN)
+
+npx expo start -c
+
+
+- 🚨 GOLDEN RULES (IMPORTANT)
+- ❌ nativewind/babel → NOT in v5
+- ✅ CSS import → _layout.tsx
+- ✅ Metro config → required
+- ✅ PostCSS → required
+- ✅ Always -c (cache clear)
+
+
+- 💥 If something breaks
+- rm -rf node_modules .expo
+- npm install
+- npx expo start -c
