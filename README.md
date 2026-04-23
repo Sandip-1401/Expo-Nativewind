@@ -54,16 +54,22 @@ Join our community of developers creating universal apps.
 
 1. 🧱Create Project
 
+```bash
 npx create-expo-app myApp
 cd myApp
+```
 
 2. 📦Install NativeWind v5 + deps
 
+```bash
 npx expo install nativewind@preview react-native-css react-native-reanimated react-native-safe-area-context
+```
 
 3. 🎨Install Tailwind + PostCSS
 
+```bash
 npx expo install --dev tailwindcss @tailwindcss/postcss postcss
+```
 
 4. 📄postcss.config.mjs
 
@@ -137,8 +143,9 @@ export default function Index() {
 
 12. 🔄Run (ALWAYS CLEAN)
 
+```bash
 npx expo start -c
-
+```
 
 - 🚨 GOLDEN RULES (IMPORTANT)
 - ❌ nativewind/babel → NOT in v5
